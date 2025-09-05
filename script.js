@@ -3,15 +3,23 @@ const display = document.querySelector('.display');
 
 let expression = '';
 let currentInput = '';
-const operators = ['±', '%','÷','×','−','+','.','='];
+const operators = ['±', '%', '÷', '×', '−', '+', '.', '='];
+
 const show = () => {
     display.textContent = expression || currentInput;
+}
+
+const calculate = () => {
+    expression = expression.replace('×', '*').replace('÷', '/').replace('−', '-').replace('=', '');
+
+    expression = Function(`return ${expression};`)();
+    show();
 }
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
         const value = button.textContent;
-        if(value != '−' && expression.length == 0 && operators.includes(value)) return;
+        if (value != '−' && expression.length == 0 && operators.includes(value)) return;
 
         currentInput = value;
         expression += currentInput;
@@ -21,6 +29,8 @@ buttons.forEach(button => {
             expression = ''
             currentInput = '0'
             show();
+        } else if (currentInput == "=") {
+            calculate();
         }
     });
 })
