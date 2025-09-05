@@ -3,9 +3,7 @@ const display = document.querySelector('.display');
 
 let expression = '';
 let currentInput = '';
-
-// 1. get the values of the buttons
-
+const operators = ['±', '%','÷','×','−','+','.','='];
 const show = () => {
     display.textContent = expression || currentInput;
 }
@@ -13,14 +11,16 @@ const show = () => {
 buttons.forEach(button => {
     button.addEventListener('click', () => {
         const value = button.textContent;
+        if(value != '−' && expression.length == 0 && operators.includes(value)) return;
+
         currentInput = value;
         expression += currentInput;
         show();
 
         if (currentInput == "C") {
-            expression = '0'
+            expression = ''
+            currentInput = '0'
             show();
         }
     });
 })
-// 2. display the values
