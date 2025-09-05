@@ -22,7 +22,11 @@ buttons.forEach(button => {
         if (value != '−' && expression.length == 0 && operators.includes(value)) return;
 
         currentInput = value;
-        expression += currentInput;
+        if (expression.length > 0 && operators.includes(expression.charAt(expression.length - 1)) && operators.includes(currentInput)) {
+            expression = expression.slice(0, -1) + currentInput;
+        } else {
+            expression += currentInput;
+        }
         show();
 
         if (currentInput == "C") {
