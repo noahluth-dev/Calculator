@@ -33,8 +33,26 @@ buttons.forEach(button => {
             expression = ''
             currentInput = '0'
             show();
-        } else if (currentInput == "=") {
+        } else if (currentInput == "±") {
+            expression = expression.slice(0, -1);
+            for (let i = expression.length - 1; i >= 0; i--) {
+                if (expression[i] == "+") {
+                    expression = expression.slice(0, i + 1) + "(−" + expression.slice(i + 1) + ")";
+                    show();
+                    return;
+                }
+
+                if (expression[i] == "−") {
+                    expression = expression.slice(0, i) + "+" + expression.slice(i + 1);
+                    show();
+                    return;
+                }
+            }
+        }
+        else if (currentInput == "=") {
             calculate();
         }
     });
 })
+
+
